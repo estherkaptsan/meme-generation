@@ -1,5 +1,5 @@
 'use strict'
 
 function onInit() {
-    console.log('start');
+    console.log('start') 
 }
