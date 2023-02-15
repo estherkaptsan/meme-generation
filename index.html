@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +8,27 @@
     <link rel="stylesheet" href="styles/main.css">
     <title>Meme Generator</title>
 </head>
+
 <body onload="onInit()">
     <h1>Meme Generator</h1>
 
-    <section class="main-container"></section>
+    <form class="txt-inputs-container" oninput="getTextInformation()">
+        <input type="text" placeholder="txt" class="txt" />
+        <input type="number" value="30" name="font-size" placeholder="font-size" class="font-size" />
+        <input type="color" name="color" class="color" />
+    </form>
 
-    <script src="js/services/meme-service.js"></script>
+    <section class="main-container">
+        <div class="canvas-container">
+            <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
+        </div>
+        <div class="gallery-container"></div>
+    </section>
+
     <script src="js/services/util.js"></script>
-    <script src="js/services/local-storage.js"></script>
     <script src="js/meme-controller.js"></script>
+    <script src="js/services/meme-service.js"></script>
+    <script src="js/services/local-storage.js"></script>
 </body>
+
 </html>

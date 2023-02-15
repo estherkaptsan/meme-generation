@@ -3,6 +3,8 @@
 
 /* COMPONENTS */
 @import 'components/header.css';
+@import 'components/canvas.css';
+@import 'components/images.css';
 
 /* MEDIA QUERIS */
 @import 'setup/mq.css';
