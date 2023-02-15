@@ -3,6 +3,7 @@
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 let gElCanvas
+let gElGallery
 let gCtx
 let gText
 
@@ -14,47 +15,45 @@ function onInit() {
 
     addListeners()
 
-    getTextInformation()
-    draw()
-
     renderGallery()
 }
+// renderMeme()
+
 
 function renderGallery() {
     let strHtmls = gImgs.map(img => `
         <img src="images/${img.id}.jpg" >
     `)
-    document.querySelector('.gallery-container').innerHTML = strHtmls.join('')
+    gElGallery = document.querySelector('.gallery-container')
+    gElGallery.innerHTML = strHtmls.join('')
 }
 
 function renderMeme() {
-    let meme = getMeme()
-    console.log(meme.selectedImgId)
-}
-
-function draw() {
-    drawImg()
-    // const textInfo = getTextInformation()
-    // const {txt, fontSize, color} = getTextInformation()
-    // drawText(30, 30, fontSize, color, txt)
-}
-
-function drawImg() {
+    let { selectedImgId, lines } = getMeme()
+    console.log(lines[0].color)
     const img = new Image()
+    img.src = gImgs[selectedImgId].url
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
+        drawText(100, 100, lines[0].size, lines[0].color, lines[0].txt)
+        // drawLines()
+        //renderLines()
     }
-    const { selectedImgId } = getMeme()
-    img.src = gImgs[selectedImgId].url
 }
 
-function getTextInformation() {
-    const txt = document.querySelector('.txt').value
-    const color = document.querySelector('.color').value
-    const fontSize = document.querySelector('.font-size').value
-    drawText(30, 40, fontSize, color, txt)
+function drawLines() {
+    const meme = getTextInformation()
 
-    // return { txt, fontSize, color }
+    const { txt, color, size, pos } = meme.afterUpdate.lines[0]
+
+    // drawText(pos.x, pos.y, size, color, txt)
+}
+
+function onUpdateMeme(key, value) {
+    console.log(key, value)
+    updateMeme(key, value)
+    renderMeme()
+    // render
 }
 
 function drawText(x, y, size, color, txt) {
@@ -68,6 +67,7 @@ function drawText(x, y, size, color, txt) {
     gCtx.fillText(txt, x, y)
     gCtx.strokeText(txt, x, y)
 }
+
 //-----------------------------------------------------------------------------------------------------------
 function addListeners() {
     addMouseListeners()
@@ -75,8 +75,10 @@ function addListeners() {
 }
 
 function addMouseListeners() {
-    gElCanvas.addEventListener('mousedown', onDown)
+    // document.querySelector('.gallery-container').addEventListener('click', onClick)
+
     gElCanvas.addEventListener('mousemove', onMove)
+    gElCanvas.addEventListener('mouseup', onUp)
     gElCanvas.addEventListener('mouseup', onUp)
 }
 
@@ -92,9 +94,7 @@ function onDown() {
 }
 
 function onMove() {
-    console.log('Move')
-    // draw()
-    renderMeme()
+    // console.log('Move')
 }
 
 function onUp() {

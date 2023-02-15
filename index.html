@@ -12,10 +12,10 @@
 <body onload="onInit()">
     <h1>Meme Generator</h1>
 
-    <form class="txt-inputs-container" oninput="getTextInformation()">
-        <input type="text" placeholder="txt" class="txt" />
-        <input type="number" value="30" name="font-size" placeholder="font-size" class="font-size" />
-        <input type="color" name="color" class="color" />
+    <form class="txt-inputs-container">
+        <input oninput="onUpdateMeme('txt', this.value)" type="text" placeholder="txt" class="txt" />
+        <input oninput="onUpdateMeme('size', this.value)" type="number" value="30" name="font-size" placeholder="font-size" class="font-size" />
+        <input oninput="onUpdateMeme('color', this.value)" type="color" name="color" class="color" />
     </form>
 
     <section class="main-container">

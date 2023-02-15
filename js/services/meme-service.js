@@ -14,17 +14,19 @@ let gImgs = [
     { id: 10, url: 'images/10.jpg', keywords: ['funny', 'cat'] },
 ]
 
-let gMeme = {
-    selectedImgId: 1,
-    selectedLineIdx: 0,
-    lines: [
-        {
-            txt: 'I sometimes eat Falafel',
-            size: 20,
-            align: 'left',
-            color: 'red'
-        }]
-}
+let gMeme
+//  = {
+//     selectedImgId: 1,
+//     selectedLineIdx: 0,
+//     lines: [
+//         {
+//             pos: { x:30, y:30 },
+//             txt: 'I sometimes eat Falafel',
+//             size: 20,
+//             align: 'left',
+//             color: 'red'
+//         }]
+// }
 
 function createMeme() {
     gMeme = {
@@ -32,10 +34,11 @@ function createMeme() {
         selectedLineIdx: 0,
         lines: [
             {
-                txt: document.querySelector('.txt').value,
-                size: document.querySelector('.font-size').valuev,
+                pos: { x: 30, y: 30 },
+                txt: 'hello',
+                size: 30,
                 align: 'left',
-                color: document.querySelector('.color').value,
+                color: '#fffff',
             }
         ]
     }
@@ -45,10 +48,14 @@ function getMeme() {
     return gMeme
 }
 
-function getSizeText() {
-    return gMeme.lines[0].size = document.querySelector('.font-size').value
-}
-
-function getColorText() {
-    return gMeme.lines[0].color = document.querySelector('.color').value
+function updateMeme(key, value) {
+    console.log(key, value) 
+    // let meme = getMeme()
+    console.log(gMeme.lines[0][key], value)
+    return gMeme.lines[0][key] = value
+   
+    // if(txt !== meme.lines[0].txt) gMeme.lines[0].txt = txt
+    // if(fontSize !== meme.lines[0].size) gMeme.lines[0].size = fontSize
+    // if(color !== meme.lines[0].color) gMeme.lines[0].color = color
+    // return gMeme
 }
