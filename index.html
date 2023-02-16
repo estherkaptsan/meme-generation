@@ -10,7 +10,7 @@
 </head>
 
 <body class="main-layout" onload="onInit()" onkeydown="onKeyDown(event)">
-    
+
     <header class="main-header full">
         <nav class="main-nav">
             <h1 class="logo">MEMES</h1>
@@ -25,33 +25,40 @@
 
         <!-- CANVAS CONTAINER -->
         <div class="canvas-container" hidden>
-            <button class="btn" onclick="onUploadImg()">
-                Share
-              </button>
+
+            <!-- share and download meme -->
+            <button class="btn" onclick="onUploadImg()">Share</button>
             <a href="#" onclick="downloadCanvas(this)" download="file-name">Download</a>
+
+            <!-- lines handling -->
             <button onclick="onAddLine()">➕</button>
             <button onclick="onDeleteLine()">➖</button>
-            <!-- switch focus between lines -->
-            <button onclick="switchBetweenLines()">switch</button>
+            <button onclick="moveUpAndDownText(-5)">⬆</button>
+            <button onclick="moveUpAndDownText(5)">⬇</button>
+            <button onclick="onSwitchBetweenLines()">switch</button>
+
             <!-- change alighn center -->
             <button value="right" onclick="onUpdateMeme('align', this.value)">R</button>
             <button value="center" onclick="onUpdateMeme('align', this.value)">C</button>
             <button value="left" onclick="onUpdateMeme('align', this.value)">L</button>
-           
+
+            <!-- update txt meme -->
             <select onchange="onUpdateMeme('fontFamily', this.value)" name="select-font">
                 <option value="Impact">Impact</option>
                 <option value="Arial">Arial</option>
                 <option value="Lato">Lato</option>
             </select>
+
             <form class="txt-inputs-container">
-                <input oninput="onUpdateMeme('txt', this.value)" type="text" placeholder="txt" class="txt" />
+                <input oninput="onUpdateMeme('txt', this.value)" name="txt" placeholder="txt" class="txt" />
                 <input oninput="onUpdateMeme('size', this.value)" type="number" value="30" name="font-size"
                     placeholder="font-size" class="font-size" />
                 <input oninput="onUpdateMeme('color', this.value)" type="color" name="color" class="color" />
             </form>
+
             <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
         </div>
-        
+
         <!-- GALLERY CONTAINER -->
         <div class="gallery-container"></div>
     </section>

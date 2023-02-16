@@ -38,38 +38,36 @@ function getMeme() {
     return gMeme
 }
 
-function updateMeme(key, value) {
-    // console.log(key, value) 
-    return gMeme.lines.map((line, idx) => {
-        return line[key] = value
-    })
+function getLines() {
+    return gMeme.lines[gMeme.selectedLineIdx]
 }
 
-function alignText(key, value) {
-    return gMeme.lines.map((line, idx) => {
-        if (key === 'align') {
-            if (value === 'center') line.pos.x = gElCanvas.width / 3
-            if (value === 'right') line.pos.x = gElCanvas.width / 11
-            if (value === 'left') line.pos.x = gElCanvas.width / 1.5
-        }
-    })
+function updateMeme(key, value) {
+    gMeme.lines[gMeme.selectedLineIdx][key] = value
+}
+
+function alignText(value) {
+    if (value === 'center')
+        gMeme.lines[gMeme.selectedLineIdx].pos.x = gElCanvas.width / 3
+    if (value === 'right')
+        gMeme.lines[gMeme.selectedLineIdx].pos.x = gElCanvas.width / 11
+    if (value === 'left')
+        gMeme.lines[gMeme.selectedLineIdx].pos.x = gElCanvas.width / 1.5
 }
 
 function moveUpAndDownText(diff) {
-    let { lines } = getMeme()
-    lines.forEach(line => {
-        line.pos.y += diff
-    })
+    gMeme.lines[gMeme.selectedLineIdx].pos.y += diff
+    renderMeme()
 }
 
 function moveRightAndLeftText(diff) {
-    let { lines } = getMeme()
-    lines.forEach(line => {
-        line.pos.x += diff
-    })
+    gMeme.lines[gMeme.selectedLineIdx].pos.x += diff
+    renderMeme()
 }
 
 function addLine() {
+    // TODO: more lines
+    if (gMeme.lines.length >= 2) return
     let y = (gMeme.lines.length === 1) ? 370 : 200
     const newLine = {
         pos: { x: 200, y: y },
@@ -80,10 +78,10 @@ function addLine() {
         fontFamily: 'Impact'
     }
     gMeme.lines.push(newLine)
+    gMeme.selectedLineIdx = gMeme.lines.length - 1
 }
 
 function deleteLine() {
-    if (!gMeme.lines) return
-    gMeme.lines.splice(gMeme.lines.length - 1, 1)
-    // gMeme.lines.length - 1 = gMeme.selectedLineIdx
+    if (!gMeme.lines.length) return
+    gMeme.lines.splice(gMeme.selectedLineIdx, 1)
 }

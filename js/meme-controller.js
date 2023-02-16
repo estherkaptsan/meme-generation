@@ -10,9 +10,7 @@ function onInit() {
     gCtx = gElCanvas.getContext('2d')
 
     createMeme()
-
     addListeners()
-
     renderGallery()
 }
 
@@ -23,7 +21,7 @@ function renderMeme() {
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
         drawLines(lines)
-        //renderLines()
+        markedSelectedLine()
     }
 }
 
@@ -45,32 +43,51 @@ function drawText(x, y, size, color, txt, fontFamily, align) {
     gCtx.strokeText(txt, x, y)
 }
 
-function onUpdateMeme(key, value) {
-    console.log(key, value)
-    alignText(key, value)
-    updateMeme(key, value)
-    renderMeme()
-    // render
+function markedSelectedLine() {
+    if(!gMeme.lines.length) return
+    const { pos } = getLines()
+    
+    // TODO: new diff
+    gCtx.beginPath()
+    gCtx.rect(pos.x - 35, pos.y - 15, pos.x + 17, pos.y - 15)
+    gCtx.strokeStyle = 'black'
+    gCtx.stroke()
 }
 
-function switchBetweenLines() {
-    console.log('gMeme.selectedLineIdx')
+function onUpdateMeme(key, value) {
+    if (!gMeme.lines.length) onAddLine()
+    alignText(value)
+    updateMeme(key, value)
+    renderMeme()
+}
+
+function onSwitchBetweenLines() {
+    if (gMeme.lines.length === 1) {
+        gMeme.selectedLineIdx = 0
+        return
+    }
+    gMeme.selectedLineIdx = (!gMeme.selectedLineIdx) ? 1 : 0
+
+    cleanInput()
+    markedSelectedLine()
+    renderMeme()
 }
 
 function onAddLine() {
     addLine()
+    cleanInput()
+    document.querySelector('input[name="txt"]').focus()
     renderMeme()
 }
 
 function onDeleteLine() {
     deleteLine()
+    cleanInput()
     renderMeme()
 }
 
-function downloadCanvas(elLink) {
-    const data = gElCanvas.toDataURL()
-    elLink.href = data
-    elLink.download = 'my-img'
+function cleanInput() {
+    document.querySelector('input[name="txt"]').value = ''
 }
 
 function onKeyDown(ev) {
@@ -94,6 +111,12 @@ function onKeyDown(ev) {
 function toggleContainer() {
     document.querySelector('.gallery-container').hidden = true
     document.querySelector('.canvas-container').hidden = false
+}
+
+function downloadCanvas(elLink) {
+    const data = gElCanvas.toDataURL()
+    elLink.href = data
+    elLink.download = 'my-img'
 }
 
 function onUploadImg() {
@@ -120,7 +143,7 @@ function doUploadImg(imgDataUrl, onSuccess) {
         if (XHR.readyState !== XMLHttpRequest.DONE) return
         if (XHR.status !== 200) return console.error('Error uploading image')
         const { responseText: url } = XHR
-       
+
         onSuccess(url)
     }
     XHR.onerror = (req, ev) => {
