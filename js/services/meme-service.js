@@ -14,41 +14,22 @@ let gImgs = [
     { id: 10, url: 'images/10.jpg', keywords: ['funny', 'cat'] },
 ]
 
+let gElGallery
 let gMeme
-//  = {
-//     selectedImgId: 1,
-//     selectedLineIdx: 0,
-//     lines: [
-//         {
-//             pos: { x:30, y:30 },
-//             txt: 'I sometimes eat Falafel',
-//             size: 20,
-//             align: 'left',
-//             color: 'red'
-//         }]
-// }
 
 function createMeme() {
     gMeme = {
-        selectedImgId: 0, // select 1 img from gallery
+        selectedImgId: 0,
         selectedLineIdx: 0,
         lines: [
             {
                 pos: { x: 133, y: 50 },
-                txt: 'first line',
+                txt: 'hello',
                 size: 30,
                 align: 'center',
-                color: '#fffff',
+                color: 'white',
                 fontFamily: 'Impact'
             },
-            // {
-            //     pos: { x: 200, y: 350 },
-            //     txt: '',
-            //     size: 30,
-            //     align: 'left',
-            //     color: '#fffff',
-            //     fontFamily: 'Impact'
-            // }
         ]
     }
 }
@@ -59,7 +40,6 @@ function getMeme() {
 
 function updateMeme(key, value) {
     // console.log(key, value) 
-    console.log(gMeme.lines[0][key], value)
     return gMeme.lines.map((line, idx) => {
         return line[key] = value
     })
@@ -87,4 +67,23 @@ function moveRightAndLeftText(diff) {
     lines.forEach(line => {
         line.pos.x += diff
     })
+}
+
+function addLine() {
+    let y = (gMeme.lines.length === 1) ? 370 : 200
+    const newLine = {
+        pos: { x: 200, y: y },
+        txt: 'new line',
+        size: 30,
+        align: 'center',
+        color: 'white',
+        fontFamily: 'Impact'
+    }
+    gMeme.lines.push(newLine)
+}
+
+function deleteLine() {
+    if (!gMeme.lines) return
+    gMeme.lines.splice(gMeme.lines.length - 1, 1)
+    // gMeme.lines.length - 1 = gMeme.selectedLineIdx
 }

@@ -9,15 +9,28 @@
     <title>Meme Generator</title>
 </head>
 
-<body onload="onInit()" onkeydown="onKeyDown(event)">
-    <h1>Meme Generator</h1>
+<body class="main-layout" onload="onInit()" onkeydown="onKeyDown(event)">
+    
+    <header class="main-header full">
+        <nav class="main-nav">
+            <h1 class="logo">MEMES</h1>
+            <ul class="clean-list main-menu flex">
+                <li><a href="#" onclick="toggleGallery()">Gallery</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+    </header>
 
     <section class="main-container">
 
         <!-- CANVAS CONTAINER -->
         <div class="canvas-container" hidden>
+            <button class="btn" onclick="onUploadImg()">
+                Share
+              </button>
+            <a href="#" onclick="downloadCanvas(this)" download="file-name">Download</a>
             <button onclick="onAddLine()">➕</button>
-            <button onclick="onDeletLine()">➖</button>
+            <button onclick="onDeleteLine()">➖</button>
             <!-- switch focus between lines -->
             <button onclick="switchBetweenLines()">switch</button>
             <!-- change alighn center -->
@@ -40,8 +53,7 @@
         </div>
         
         <!-- GALLERY CONTAINER -->
-        <div class="gallery-container">
-        </div>
+        <div class="gallery-container"></div>
     </section>
 
     <script src="js/services/util.js"></script>

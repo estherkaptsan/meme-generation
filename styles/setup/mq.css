@@ -1,0 +1,51 @@
+/* MOBILE */
+@media (max-width: 740px) {}
+
+/* TABLET */
+/* 880px */
+
+@media (min-width: 880px) {
+    .main-layout {
+        display: grid;
+        grid-template-columns:
+          minmax(20px, 1fr)
+          minmax(auto, 600px)
+          minmax(20px, 1fr);
+      }
+      .main-layout > *:not(.full) {
+        grid-column: 2;
+      }
+      .main-layout > .full {
+        grid-column: 1 / -1;
+      }
+
+    .main-header {
+        height: 130px;
+        display: grid;
+        grid-template-columns:
+        minmax(1.25rem, 1fr) minmax(auto, 1020px) minmax(1.25rem, 1fr);
+    }
+    
+    .main-header .main-menu > * {
+        margin-inline-end: 100px;
+    }
+    
+    .main-header .main-menu a{
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+    
+    .main-nav{
+        grid-column: 2;
+    }
+}
+
+/* DESKTOP */
+@media (min-width: 1110px) {
+
+    .main-layout {
+        grid-template-columns:
+            minmax(20px, 1fr) minmax(auto, 1060px) minmax(20px, 1fr);
+    }
+
+}

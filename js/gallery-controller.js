@@ -14,7 +14,8 @@ function onImgSelect(imgId) {
     renderMeme()
 }
 
-function toggleContainer() {
-    document.querySelector('.gallery-container').hidden = true
-    document.querySelector('.canvas-container').hidden = false
+
+function toggleGallery() {
+    document.querySelector('.gallery-container').hidden = false
+    document.querySelector('.canvas-container').hidden = true
 }

@@ -3,9 +3,7 @@
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
 
 let gElCanvas
-let gElGallery
 let gCtx
-let gText
 
 function onInit() {
     gElCanvas = document.querySelector('#my-canvas')
@@ -17,11 +15,9 @@ function onInit() {
 
     renderGallery()
 }
-// renderMeme()
 
 function renderMeme() {
     let { selectedImgId, lines } = getMeme()
-    console.log(lines[0].color)
     const img = new Image()
     img.src = gImgs[selectedImgId].url
     img.onload = () => {
@@ -37,14 +33,6 @@ function drawLines(lines) {
     })
 }
 
-function onUpdateMeme(key, value) {
-    console.log(key, value)
-    alignText(key, value)
-    updateMeme(key, value)
-    renderMeme()
-    // render
-}
-
 function drawText(x, y, size, color, txt, fontFamily, align) {
     gCtx.lineWidth = 1
     gCtx.strokeStyle = 'black'
@@ -57,12 +45,32 @@ function drawText(x, y, size, color, txt, fontFamily, align) {
     gCtx.strokeText(txt, x, y)
 }
 
+function onUpdateMeme(key, value) {
+    console.log(key, value)
+    alignText(key, value)
+    updateMeme(key, value)
+    renderMeme()
+    // render
+}
+
 function switchBetweenLines() {
-    console.log('switch')
-    console.log(gElCanvas)
-    gElCanvas.addEventListener('click', function (ev) {
-        console.log(ev.offsetX)
-    })
+    console.log('gMeme.selectedLineIdx')
+}
+
+function onAddLine() {
+    addLine()
+    renderMeme()
+}
+
+function onDeleteLine() {
+    deleteLine()
+    renderMeme()
+}
+
+function downloadCanvas(elLink) {
+    const data = gElCanvas.toDataURL()
+    elLink.href = data
+    elLink.download = 'my-img'
 }
 
 function onKeyDown(ev) {
@@ -83,3 +91,41 @@ function onKeyDown(ev) {
     renderMeme()
 }
 
+function toggleContainer() {
+    document.querySelector('.gallery-container').hidden = true
+    document.querySelector('.canvas-container').hidden = false
+}
+
+function onUploadImg() {
+    const imgDataUrl = gElCanvas.toDataURL('images/jpeg') // Gets the canvas content as an image format
+
+    // A function to be called if request succeeds
+    function onSuccess(uploadedImgUrl) {
+        // Encode the instance of certain characters in the url
+        const encodedUploadedImgUrl = encodeURIComponent(uploadedImgUrl)
+        console.log(encodedUploadedImgUrl)
+        window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodedUploadedImgUrl}&t=${encodedUploadedImgUrl}`)
+    }
+    doUploadImg(imgDataUrl, onSuccess)
+}
+
+function doUploadImg(imgDataUrl, onSuccess) {
+    // Pack the image for delivery
+    const formData = new FormData()
+    formData.append('img', imgDataUrl)
+
+    // Send a post req with the image to the server
+    const XHR = new XMLHttpRequest()
+    XHR.onreadystatechange = () => {
+        if (XHR.readyState !== XMLHttpRequest.DONE) return
+        if (XHR.status !== 200) return console.error('Error uploading image')
+        const { responseText: url } = XHR
+       
+        onSuccess(url)
+    }
+    XHR.onerror = (req, ev) => {
+        console.error('Error connecting to server with request:', req, '\nGot response data:', ev)
+    }
+    XHR.open('POST', '//ca-upload.com/here/upload.php')
+    XHR.send(formData)
+}

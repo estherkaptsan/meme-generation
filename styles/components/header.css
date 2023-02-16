@@ -1,0 +1,23 @@
+.main-header {
+    background-color: rgb(230, 242, 228);
+}
+
+.main-header {
+    height: 130px;
+    display: grid;
+    grid-template-columns:
+    minmax(1.25rem, 1fr) minmax(auto, 1020px) minmax(1.25rem, 1fr);
+}
+
+.main-header .main-menu > * {
+    margin-inline-end: 100px;
+}
+
+.main-header .main-menu a{
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.main-nav{
+    grid-column: 2;
+}  
