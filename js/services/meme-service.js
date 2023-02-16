@@ -30,16 +30,25 @@ let gMeme
 
 function createMeme() {
     gMeme = {
-        selectedImgId: 2, // select 1 img from gallery
+        selectedImgId: 0, // select 1 img from gallery
         selectedLineIdx: 0,
         lines: [
             {
-                pos: { x: 30, y: 30 },
-                txt: 'hello',
+                pos: { x: 133, y: 50 },
+                txt: 'first line',
                 size: 30,
-                align: 'left',
+                align: 'center',
                 color: '#fffff',
-            }
+                fontFamily: 'Impact'
+            },
+            // {
+            //     pos: { x: 200, y: 350 },
+            //     txt: '',
+            //     size: 30,
+            //     align: 'left',
+            //     color: '#fffff',
+            //     fontFamily: 'Impact'
+            // }
         ]
     }
 }
@@ -49,13 +58,33 @@ function getMeme() {
 }
 
 function updateMeme(key, value) {
-    console.log(key, value) 
-    // let meme = getMeme()
+    // console.log(key, value) 
     console.log(gMeme.lines[0][key], value)
-    return gMeme.lines[0][key] = value
-   
-    // if(txt !== meme.lines[0].txt) gMeme.lines[0].txt = txt
-    // if(fontSize !== meme.lines[0].size) gMeme.lines[0].size = fontSize
-    // if(color !== meme.lines[0].color) gMeme.lines[0].color = color
-    // return gMeme
+    return gMeme.lines.map((line, idx) => {
+        return line[key] = value
+    })
+}
+
+function alignText(key, value) {
+    return gMeme.lines.map((line, idx) => {
+        if (key === 'align') {
+            if (value === 'center') line.pos.x = gElCanvas.width / 3
+            if (value === 'right') line.pos.x = gElCanvas.width / 11
+            if (value === 'left') line.pos.x = gElCanvas.width / 1.5
+        }
+    })
+}
+
+function moveUpAndDownText(diff) {
+    let { lines } = getMeme()
+    lines.forEach(line => {
+        line.pos.y += diff
+    })
+}
+
+function moveRightAndLeftText(diff) {
+    let { lines } = getMeme()
+    lines.forEach(line => {
+        line.pos.x += diff
+    })
 }

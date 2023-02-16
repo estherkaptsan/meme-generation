@@ -19,15 +19,6 @@ function onInit() {
 }
 // renderMeme()
 
-
-function renderGallery() {
-    let strHtmls = gImgs.map(img => `
-        <img src="images/${img.id}.jpg" >
-    `)
-    gElGallery = document.querySelector('.gallery-container')
-    gElGallery.innerHTML = strHtmls.join('')
-}
-
 function renderMeme() {
     let { selectedImgId, lines } = getMeme()
     console.log(lines[0].color)
@@ -35,69 +26,60 @@ function renderMeme() {
     img.src = gImgs[selectedImgId].url
     img.onload = () => {
         gCtx.drawImage(img, 0, 0, gElCanvas.width, gElCanvas.height)
-        drawText(100, 100, lines[0].size, lines[0].color, lines[0].txt)
-        // drawLines()
+        drawLines(lines)
         //renderLines()
     }
 }
 
-function drawLines() {
-    const meme = getTextInformation()
-
-    const { txt, color, size, pos } = meme.afterUpdate.lines[0]
-
-    // drawText(pos.x, pos.y, size, color, txt)
+function drawLines(lines) {
+    lines.forEach(line => {
+        drawText(line.pos.x, line.pos.y, line.size, line.color, line.txt, line.fontFamily)
+    })
 }
 
 function onUpdateMeme(key, value) {
     console.log(key, value)
+    alignText(key, value)
     updateMeme(key, value)
     renderMeme()
     // render
 }
 
-function drawText(x, y, size, color, txt) {
+function drawText(x, y, size, color, txt, fontFamily, align) {
     gCtx.lineWidth = 1
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = color
-    gCtx.font = `${size}px Impact`
-    gCtx.textAlign = 'center'
+    gCtx.font = `${size}px ${fontFamily}`
+    gCtx.textAlign = `${align}`
     gCtx.textBaseline = 'middle'
 
     gCtx.fillText(txt, x, y)
     gCtx.strokeText(txt, x, y)
 }
 
-//-----------------------------------------------------------------------------------------------------------
-function addListeners() {
-    addMouseListeners()
-    addTouchListeners()
+function switchBetweenLines() {
+    console.log('switch')
+    console.log(gElCanvas)
+    gElCanvas.addEventListener('click', function (ev) {
+        console.log(ev.offsetX)
+    })
 }
 
-function addMouseListeners() {
-    // document.querySelector('.gallery-container').addEventListener('click', onClick)
-
-    gElCanvas.addEventListener('mousemove', onMove)
-    gElCanvas.addEventListener('mouseup', onUp)
-    gElCanvas.addEventListener('mouseup', onUp)
+function onKeyDown(ev) {
+    switch (ev.key) {
+        case 'ArrowDown':
+            moveUpAndDownText(5)
+            break;
+        case 'ArrowUp':
+            moveUpAndDownText(-5)
+            break;
+        case 'ArrowLeft':
+            moveRightAndLeftText(-5)
+            break;
+        case 'ArrowRight':
+            moveRightAndLeftText(5)
+            break;
+    }
+    renderMeme()
 }
 
-function addTouchListeners() {
-    gElCanvas.addEventListener('touchstart', onDown)
-    gElCanvas.addEventListener('touchmove', onMove)
-    gElCanvas.addEventListener('touchend', onUp)
-}
-
-function onDown() {
-    console.log('Down')
-
-}
-
-function onMove() {
-    // console.log('Move')
-}
-
-function onUp() {
-    console.log('Up')
-
-}

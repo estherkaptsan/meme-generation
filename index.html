@@ -9,26 +9,48 @@
     <title>Meme Generator</title>
 </head>
 
-<body onload="onInit()">
+<body onload="onInit()" onkeydown="onKeyDown(event)">
     <h1>Meme Generator</h1>
 
-    <form class="txt-inputs-container">
-        <input oninput="onUpdateMeme('txt', this.value)" type="text" placeholder="txt" class="txt" />
-        <input oninput="onUpdateMeme('size', this.value)" type="number" value="30" name="font-size" placeholder="font-size" class="font-size" />
-        <input oninput="onUpdateMeme('color', this.value)" type="color" name="color" class="color" />
-    </form>
-
     <section class="main-container">
-        <div class="canvas-container">
+
+        <!-- CANVAS CONTAINER -->
+        <div class="canvas-container" hidden>
+            <button onclick="onAddLine()">➕</button>
+            <button onclick="onDeletLine()">➖</button>
+            <!-- switch focus between lines -->
+            <button onclick="switchBetweenLines()">switch</button>
+            <!-- change alighn center -->
+            <button value="right" onclick="onUpdateMeme('align', this.value)">R</button>
+            <button value="center" onclick="onUpdateMeme('align', this.value)">C</button>
+            <button value="left" onclick="onUpdateMeme('align', this.value)">L</button>
+           
+            <select onchange="onUpdateMeme('fontFamily', this.value)" name="select-font">
+                <option value="Impact">Impact</option>
+                <option value="Arial">Arial</option>
+                <option value="Lato">Lato</option>
+            </select>
+            <form class="txt-inputs-container">
+                <input oninput="onUpdateMeme('txt', this.value)" type="text" placeholder="txt" class="txt" />
+                <input oninput="onUpdateMeme('size', this.value)" type="number" value="30" name="font-size"
+                    placeholder="font-size" class="font-size" />
+                <input oninput="onUpdateMeme('color', this.value)" type="color" name="color" class="color" />
+            </form>
             <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
         </div>
-        <div class="gallery-container"></div>
+        
+        <!-- GALLERY CONTAINER -->
+        <div class="gallery-container">
+        </div>
     </section>
 
     <script src="js/services/util.js"></script>
     <script src="js/meme-controller.js"></script>
+    <script src="js/gallery-controller.js"></script>
     <script src="js/services/meme-service.js"></script>
+    <script src="js/services/gallery-service.js"></script>
     <script src="js/services/local-storage.js"></script>
+    <script src="js/services/event-listener.js"></script>
 </body>
 
 </html>
