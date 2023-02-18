@@ -2,3 +2,58 @@
     outline: 1px solid rgb(45, 45, 47);
 }
 
+.editor-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    width: 300px;
+    display: grid;
+    grid-template-rows: repeat(6, 50px);
+}
+
+.txt-inputs-container>* {
+    width: 70px;
+}
+
+.txt {
+    width: 300px;
+    height: 40px;
+}
+
+.font-size {
+    width: 70px;
+}
+
+.color {
+    width: 70px;
+}
+
+.select-font {
+    width: 100px;
+}
+
+.lines-handling>* {
+    margin: 30px;
+    text-align: center;
+}
+
+.align>* {
+    margin: 20px;
+}
+
+.emojis-container{
+    border: 1px solid #003d5b;
+    border-radius: 7px;
+    background-color: rgb(253, 253, 253);
+    width: 300px;
+    height: 40px;
+}
+
+.finish {
+    width: 200px;
+    margin: auto;
+}
+
+.share-download>* {
+    width: 125px;
+}

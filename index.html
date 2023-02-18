@@ -13,7 +13,7 @@
 
     <header class="main-header full">
         <nav class="main-nav">
-            <h1 class="logo">MEMES</h1>
+            <h1 class="logo">MEMES </h1>
             <ul class="clean-list main-menu flex">
                 <li><a href="#" onclick="toggleGallery()">Gallery</a></li>
                 <li><a href="#">About</a></li>
@@ -24,39 +24,56 @@
     <section class="main-container">
 
         <!-- CANVAS CONTAINER -->
-        <div class="canvas-container" hidden>
-
-            <!-- share and download meme -->
-            <button class="btn" onclick="onUploadImg()">Share</button>
-            <a href="#" onclick="downloadCanvas(this)" download="file-name">Download</a>
-
-            <!-- lines handling -->
-            <button onclick="onAddLine()">➕</button>
-            <button onclick="onDeleteLine()">➖</button>
-            <button onclick="moveUpAndDownText(-5)">⬆</button>
-            <button onclick="moveUpAndDownText(5)">⬇</button>
-            <button onclick="onSwitchBetweenLines()">switch</button>
-
-            <!-- change alighn center -->
-            <button value="right" onclick="onUpdateMeme('align', this.value)">R</button>
-            <button value="center" onclick="onUpdateMeme('align', this.value)">C</button>
-            <button value="left" onclick="onUpdateMeme('align', this.value)">L</button>
-
-            <!-- update txt meme -->
-            <select onchange="onUpdateMeme('fontFamily', this.value)" name="select-font">
-                <option value="Impact">Impact</option>
-                <option value="Arial">Arial</option>
-                <option value="Lato">Lato</option>
-            </select>
-
-            <form class="txt-inputs-container">
-                <input oninput="onUpdateMeme('txt', this.value)" name="txt" placeholder="txt" class="txt" />
-                <input oninput="onUpdateMeme('size', this.value)" type="number" value="30" name="font-size"
-                    placeholder="font-size" class="font-size" />
-                <input oninput="onUpdateMeme('color', this.value)" type="color" name="color" class="color" />
-            </form>
-
+        <div class="canvas-container hide" >
+            <!-- canvas -->
             <canvas class="my-canvas" id="my-canvas" width="400" height="400"></canvas>
+
+            <!-- editor -->
+            <div class="editor-container">
+
+                <!-- update txt meme -->
+                <input oninput="onUpdateMeme('txt', this.value)" name="txt" placeholder="text" class="txt" />
+                
+                <form class="txt-inputs-container flex-center space-between">
+                    <input oninput="onUpdateMeme('size', this.value)" type="number" value="30" name="font-size"
+                        class="font-size" />
+                    <input oninput="onUpdateMeme('color', this.value)" type="color" name="color" class="color" />
+
+                    <select onchange="onUpdateMeme('fontFamily', this.value)" name="select-font" class="select-font">
+                        <option value="Impact">Impact</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Lato">Lato</option>
+                    </select>
+                </form>
+
+                <!-- lines handling -->
+                <div class="lines-handling flex-center">
+                    <button onclick="onAddLine()">➕</button>
+                    <button onclick="onDeleteLine()">➖</button>
+                    <button onclick="onSwitchBetweenLines()">⬆⬇</button>
+                </div>
+
+                <!-- change alighn center -->
+                <div class="align flex-center">
+                    <button value="right" onclick="onUpdateMeme('align', this.value)">R</button>
+                    <button value="center" onclick="onUpdateMeme('align', this.value)">C</button>
+                    <button value="left" onclick="onUpdateMeme('align', this.value)">L</button>
+                </div>
+
+                <!-- <div class="emojis-container flex-center">
+                    <button>⬅</button>
+                    <button>➡</button>
+                </div> -->
+
+                <!-- share and download meme -->
+                <div class="share-download flex-center space-between">
+                    <button class="btn" onclick="onUploadImg()">Share </button>
+                    <button class="download"><a href="#" onclick="downloadCanvas(this)"
+                            download="file-name">Download</a></button>
+                </div>
+                
+                <button title="clear-marked" class="finish" onclick="onClearMarked()">finish update</button>
+            </div>
         </div>
 
         <!-- GALLERY CONTAINER -->

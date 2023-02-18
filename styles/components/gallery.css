@@ -1,3 +1,7 @@
-.gallery-container {
 
+.gallery-container {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 5px;
 }
+
+

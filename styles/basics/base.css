@@ -1,11 +1,38 @@
 * {
     box-sizing: border-box;
 }
+
+
 body {
     margin: 0;
+    background-color: #eff6e0;
 }
+
 a {
     text-decoration: none;
     color: inherit;
 }
 
+button {
+    background-color: rgb(255, 255, 255);
+    color: #003d5b;
+    font-size: 1rem;
+    border: 1px solid #003d5b;
+    border-radius: 7px;
+    padding: 7px;
+    transition: background-color 1.5s;
+    transition: font-size 0.5s;
+}
+
+button:hover {
+    background-color: #b8d4e1;
+    font-size: 1.2rem;
+    transition: background-color 1.5s;
+    transition: font-size 0.5s;
+}
+
+input {
+    border-radius: 7px;
+    border: 1px solid #003d5b;
+    padding: 3px;
+}

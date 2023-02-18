@@ -12,10 +12,20 @@ let gImgs = [
     { id: 8, url: 'images/8.jpg', keywords: ['funny', 'cat'] },
     { id: 9, url: 'images/9.jpg', keywords: ['funny', 'cat'] },
     { id: 10, url: 'images/10.jpg', keywords: ['funny', 'cat'] },
+    { id: 11, url: 'images/11.jpg', keywords: ['funny', 'cat'] },
+    { id: 12, url: 'images/12.jpg', keywords: ['funny', 'cat'] },
+    { id: 13, url: 'images/13.jpg', keywords: ['funny', 'cat'] },
+    { id: 14, url: 'images/14.jpg', keywords: ['funny', 'cat'] },
+    { id: 15, url: 'images/15.jpg', keywords: ['funny', 'cat'] },
+    { id: 16, url: 'images/16.jpg', keywords: ['funny', 'cat'] },
+    { id: 17, url: 'images/17.jpg', keywords: ['funny', 'cat'] },
+    { id: 18, url: 'images/18.jpg', keywords: ['funny', 'cat'] },
 ]
+let gEmojis = ['😀','😁','😊','🙂','😍']
 
 let gElGallery
 let gMeme
+let gSwitch
 
 function createMeme() {
     gMeme = {
@@ -23,8 +33,9 @@ function createMeme() {
         selectedLineIdx: 0,
         lines: [
             {
+                drawRect: true,
                 pos: { x: 133, y: 50 },
-                txt: 'hello',
+                txt: ' ',
                 size: 30,
                 align: 'center',
                 color: 'white',
@@ -32,6 +43,13 @@ function createMeme() {
             },
         ]
     }
+}
+
+function switchBetweenLines() {
+    if(gSwitch === gMeme.lines.length) gSwitch = 0
+
+    gSwitch++
+    gMeme.selectedLineIdx = (gSwitch === gMeme.lines.length) ? 0 : gSwitch
 }
 
 function getMeme() {
@@ -66,12 +84,12 @@ function moveRightAndLeftText(diff) {
 }
 
 function addLine() {
-    // TODO: more lines
-    if (gMeme.lines.length >= 2) return
     let y = (gMeme.lines.length === 1) ? 370 : 200
+    let x = (gMeme.lines.length === 1) ? 200 : getRandomInt(10, gElCanvas.width - 100)
     const newLine = {
-        pos: { x: 200, y: y },
-        txt: 'new line',
+        drawRect: true,
+        pos: { x: x, y: y },
+        txt: '',
         size: 30,
         align: 'center',
         color: 'white',
@@ -84,4 +102,9 @@ function addLine() {
 function deleteLine() {
     if (!gMeme.lines.length) return
     gMeme.lines.splice(gMeme.selectedLineIdx, 1)
+    gMeme.selectedLineIdx = gMeme.lines.length - 1
+}
+
+function clearMarked() {
+    gMeme.lines[gMeme.selectedLineIdx].drawRect = false
 }

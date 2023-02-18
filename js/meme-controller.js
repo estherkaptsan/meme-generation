@@ -1,6 +1,8 @@
 'use strict'
 
 const TOUCH_EVS = ['touchstart', 'touchmove', 'touchend']
+const MARGIN_W = 35
+const MARGIN_H = 25
 
 let gElCanvas
 let gCtx
@@ -8,6 +10,8 @@ let gCtx
 function onInit() {
     gElCanvas = document.querySelector('#my-canvas')
     gCtx = gElCanvas.getContext('2d')
+
+    gSwitch = 0
 
     createMeme()
     addListeners()
@@ -23,6 +27,34 @@ function renderMeme() {
         drawLines(lines)
         markedSelectedLine()
     }
+}
+
+function onUpdateMeme(key, value) {
+    if (!gMeme.lines.length) onAddLine()
+    alignText(value)
+    updateMeme(key, value)
+    renderMeme()
+}
+
+function onSwitchBetweenLines() {
+    switchBetweenLines()
+    cleanInput()
+    focusOnInput()
+    markedSelectedLine()
+    renderMeme()
+}
+
+function onAddLine() {
+    addLine()
+    cleanInput()
+    focusOnInput()
+    renderMeme()
+}
+
+function onDeleteLine() {
+    deleteLine()
+    cleanInput()
+    renderMeme()
 }
 
 function drawLines(lines) {
@@ -44,46 +76,39 @@ function drawText(x, y, size, color, txt, fontFamily, align) {
 }
 
 function markedSelectedLine() {
-    if(!gMeme.lines.length) return
-    const { pos } = getLines()
-    
-    // TODO: new diff
+    if (!gMeme.lines.length) return
+    if (!gMeme.lines[gMeme.selectedLineIdx].drawRect) return
+    const { pos, txt, size } = getLines()
+   
+    // calculate diff
+    const metrics = gCtx.measureText(txt)
+    const textWidth = Math.ceil(metrics.width)
+    // const textHeight = Math.ceil(metrics.height)
+    const textHeight = size
+    let x = pos.x - MARGIN_W
+    let y = pos.y - MARGIN_H
+    let w = 2 * MARGIN_W + textWidth
+    // let h = 2 * MARGIN_H + textHeight
+    // let h = textHeight
+    // let fontHeight = metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent;
+    let actualHeight = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent;
+    // let h = 2 * MARGIN_H + actualHeight
+    let h = MARGIN_H + actualHeight
+
+    // draw rect
     gCtx.beginPath()
-    gCtx.rect(pos.x - 35, pos.y - 15, pos.x + 17, pos.y - 15)
+    gCtx.rect(x, y, w, h)
     gCtx.strokeStyle = 'black'
     gCtx.stroke()
 }
 
-function onUpdateMeme(key, value) {
-    if (!gMeme.lines.length) onAddLine()
-    alignText(value)
-    updateMeme(key, value)
+function onClearMarked() {
+    clearMarked()
     renderMeme()
 }
 
-function onSwitchBetweenLines() {
-    if (gMeme.lines.length === 1) {
-        gMeme.selectedLineIdx = 0
-        return
-    }
-    gMeme.selectedLineIdx = (!gMeme.selectedLineIdx) ? 1 : 0
-
-    cleanInput()
-    markedSelectedLine()
-    renderMeme()
-}
-
-function onAddLine() {
-    addLine()
-    cleanInput()
+function focusOnInput() {
     document.querySelector('input[name="txt"]').focus()
-    renderMeme()
-}
-
-function onDeleteLine() {
-    deleteLine()
-    cleanInput()
-    renderMeme()
 }
 
 function cleanInput() {
@@ -109,11 +134,12 @@ function onKeyDown(ev) {
 }
 
 function toggleContainer() {
-    document.querySelector('.gallery-container').hidden = true
-    document.querySelector('.canvas-container').hidden = false
+    document.querySelector('.gallery-container').classList.add('hide')
+    document.querySelector('.canvas-container').classList.remove('hide')
 }
 
 function downloadCanvas(elLink) {
+    onClearMarked()
     const data = gElCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'my-img'
