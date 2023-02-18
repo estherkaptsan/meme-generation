@@ -10,11 +10,11 @@ function renderGallery() {
 
 function onImgSelect(imgId) {
     setImg(imgId)
-    toggleContainer()
+    viewContainer()
     renderMeme()
 }
 
-function toggleGallery() {
+function viewGallery() {
     onInit()
     document.querySelector('.gallery-container').classList.remove('hide')
     document.querySelector('.canvas-container').classList.add('hide')

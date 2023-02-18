@@ -133,13 +133,13 @@ function onKeyDown(ev) {
     renderMeme()
 }
 
-function toggleContainer() {
+function viewContainer() {
     document.querySelector('.gallery-container').classList.add('hide')
     document.querySelector('.canvas-container').classList.remove('hide')
 }
 
 function downloadCanvas(elLink) {
-    onClearMarked()
+    // onClearMarked()
     const data = gElCanvas.toDataURL()
     elLink.href = data
     elLink.download = 'my-img'
