@@ -136,6 +136,7 @@ function onKeyDown(ev) {
 function viewContainer() {
     document.querySelector('.gallery-container').classList.add('hide')
     document.querySelector('.canvas-container').classList.remove('hide')
+    focusOnInput()
 }
 
 function downloadCanvas(elLink) {

@@ -21,7 +21,7 @@ let gImgs = [
     { id: 17, url: 'images/17.jpg', keywords: ['funny', 'cat'] },
     { id: 18, url: 'images/18.jpg', keywords: ['funny', 'cat'] },
 ]
-let gEmojis = ['😀','😁','😊','🙂','😍']
+let gEmojis = ['😀', '😁', '😊', '🙂', '😍']
 
 let gElGallery
 let gMeme
@@ -46,7 +46,7 @@ function createMeme() {
 }
 
 function switchBetweenLines() {
-    if(gSwitch === gMeme.lines.length) gSwitch = 0
+    if (gSwitch === gMeme.lines.length) gSwitch = 0
 
     gSwitch++
     gMeme.selectedLineIdx = (gSwitch === gMeme.lines.length) ? 0 : gSwitch
@@ -75,20 +75,19 @@ function alignText(value) {
 
 function moveUpAndDownText(diff) {
     gMeme.lines[gMeme.selectedLineIdx].pos.y += diff
-    renderMeme()
 }
 
 function moveRightAndLeftText(diff) {
     gMeme.lines[gMeme.selectedLineIdx].pos.x += diff
-    renderMeme()
 }
 
 function addLine() {
     let y = (gMeme.lines.length === 1) ? 370 : 200
-    let x = (gMeme.lines.length === 1) ? 200 : getRandomInt(10, gElCanvas.width - 100)
+    // let x = (gMeme.lines.length === 1) ? 133 : getRandomInt(10, gElCanvas.width - 100)
+    let x = 133
     const newLine = {
         drawRect: true,
-        pos: { x: x, y: y },
+        pos: { x, y },
         txt: '',
         size: 30,
         align: 'center',

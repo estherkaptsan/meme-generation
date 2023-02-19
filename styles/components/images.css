@@ -1,6 +1,12 @@
 img {
-  height: 220px;
-  width: 220px;
+  height: 100%;
+  width: 100%;
   border-radius: 20px;
   border: 2px solid #3b6064b2;
+  cursor: pointer;
+  background-color: darkgray;
+}
+
+img:hover {
+  opacity: .8;
 }

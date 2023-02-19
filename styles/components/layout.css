@@ -1,7 +1,8 @@
 
 .main-layout {
     display: grid;
-    grid-template-columns: 20px 1fr 20px;
+    grid-template-columns: 1fr 5fr 1fr;
+    /* grid-template-columns: 20px 1fr 20px; */
 }
 
 .main-layout>.full {

@@ -4,9 +4,9 @@
 /* BASICS */
 @import 'basics/base.css';
 @import 'basics/helpers.css';
-@import 'components/layout.css';
 
 /* COMPONENTS */
+@import 'components/layout.css';
 @import 'components/header.css';
 @import 'components/canvas.css';
 @import 'components/gallery.css';
@@ -15,6 +15,3 @@
 /* MEDIA QUERIS */
 @import 'setup/mq.css';
 
-.hide {
-    display: none;
-}

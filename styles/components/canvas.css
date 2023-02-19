@@ -1,12 +1,21 @@
 .my-canvas {
-    outline: 1px solid rgb(45, 45, 47);
+    outline: 1px solid  rgb(156, 156, 159);
+}
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .editor-container {
     margin-top: 20px;
     margin-bottom: 20px;
+    padding: 20px;
+    outline: 1px solid rgb(156, 156, 159);
+    border-radius: 7px;
+    background-color: #f1faee;
 
-    width: 300px;
+    width: 400px;
     display: grid;
     grid-template-rows: repeat(6, 50px);
 }
@@ -16,6 +25,7 @@
 }
 
 .txt {
+    margin: auto;
     width: 300px;
     height: 40px;
 }

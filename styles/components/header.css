@@ -1,6 +1,7 @@
 .main-header {
     background-color: #77bfa3;
     margin-bottom: 20px;
+    height: 130px;
 }
 
 .main-header {
@@ -21,8 +22,9 @@
     font-size: 2rem;
     font-family: gajraj;
     color: #00798c;
+    cursor: pointer;
 }
 
-.main-header .main-menu > * a:hover{
+.main-header .main-menu > * a:hover, .logo:hover{
     color: #21626c;
 }

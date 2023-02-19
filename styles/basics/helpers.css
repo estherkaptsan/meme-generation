@@ -25,3 +25,7 @@
 .space-between {
   justify-content: space-between;
 }
+
+.gallery-container.hide, .canvas-container.hide{
+  display: none;
+}
