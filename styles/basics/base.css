@@ -2,7 +2,6 @@
     box-sizing: border-box;
 }
 
-
 body {
     margin: 0;
     background-color: #eff6e0;
@@ -21,6 +20,7 @@ button {
     border-radius: 7px;
     padding: 7px;
     transition: background-color 1.5s;
+    cursor: pointer;
 }
 
 button:hover {
